@@ -9,6 +9,12 @@
 
 ## 🛠 Initial Setup
 
+### 0. Open Docker Desktop
+
+Make sure Docker Desktop is installed and running before starting.
+
+---
+
 ### 1. Clone the repository
 
 ```
@@ -28,13 +34,13 @@ npm install
 
 ---
 
-### 3. Create `.env` file
+### 3. Set up `.env` file
 
-```
-touch .env
-```
+Request the `.env` file from your team.
 
-Add:
+Place the received `.env` file in the root directory of the project.
+
+Example:
 
 ```
 NEXT_PUBLIC_API_BASE_URL=your_api_url_here
@@ -42,13 +48,12 @@ NEXT_PUBLIC_API_BASE_URL=your_api_url_here
 
 ---
 
-### 4. Create `Dockerfile.dev`
+### 4. Check `Dockerfile.dev`
 
-```
-touch Dockerfile.dev
-```
+If `Dockerfile.dev` does not exist, create it and copy the content below.  
+If it exists, update it to match the configuration below if needed:
 
-```
+```dockerfile
 FROM node:20-alpine
 
 WORKDIR /app
@@ -60,15 +65,17 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "-p", "3001"]
 ```
 
 ---
 
-### 5. Edit(copy & paste) on `docker-compose.yml`
+### 5. Check `docker-compose.yml`
 
+Compare your `docker-compose.yml` with the configuration below.  
+If it is different, update it to match:
 
-```
+```yaml
 services:
   dashboard:
     build:
@@ -93,23 +100,7 @@ networks:
 
 ---
 
-### 6. Update `package.json`
-
-Change:
-
-```
-"dev": "next dev"
-```
-
-to:
-
-```
-"dev": "next dev -p 3001"
-```
-
----
-
-### 7. Start the app
+### 6. Start the app
 
 ```
 docker compose up --build
@@ -123,33 +114,48 @@ http://localhost:3001
 
 ## 🔁 Daily Development
 
+- Start the application:
+
 ```
 docker compose up
 ```
-
+- Stop the application:
+```
+docker compose down
+```
+- Rebuild if needed (e.g., after dependency or config changes):
+```
+docker compose up --build
+```
 ---
 
 ## 🧠 Notes
 
-Even though Docker installs dependencies, VS Code runs locally and needs `node_modules`.
+- Docker runs the application.
+- Local `npm install` is required for VS Code (TypeScript, IntelliSense).
+- Port configuration is handled by Docker, not `package.json`.
 
 ---
 
 ## 🐛 Troubleshooting
 
-### `react/jsx-runtime` error
+### If you see errors like `react/jsx-runtime` not found or TypeScript issues in VS Code, run:
 
 ```
 npm install
 ```
 
+---
+
 ### Port issue
 
-Ensure:
+Ensure Docker is running and:
 
 ```
-"dev": "next dev -p 3001"
+CMD ["npm", "run", "dev", "--", "-p", "3001"]
 ```
+
+is correctly set in `Dockerfile.dev`.
 
 ---
 
