@@ -65,11 +65,8 @@ CMD ["npm", "run", "dev"]
 
 ---
 
-### 5. Create `docker-compose.yml`
+### 5. Edit(copy & paste) on `docker-compose.yml`
 
-```
-touch docker-compose.yml
-```
 
 ```
 services:
