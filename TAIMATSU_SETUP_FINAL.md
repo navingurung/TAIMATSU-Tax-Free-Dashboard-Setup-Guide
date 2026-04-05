@@ -50,8 +50,8 @@ NEXT_PUBLIC_API_BASE_URL=your_api_url_here
 
 ### 4. Check `Dockerfile.dev`
 
-Compare your `Dockerfile.dev` with the configuration below.  
-If it is different, update it to match:
+If `Dockerfile.dev` does not exist, create it and copy the content below.  
+If it exists, update it to match the configuration below if needed:
 
 ```dockerfile
 FROM node:20-alpine
@@ -100,19 +100,7 @@ networks:
 
 ---
 
-### 6. Check `package.json`
-
-Ensure the `dev` script is:
-
-```
-"dev": "next dev"
-```
-
-> ⚠️ Do NOT change this to include a port. Port configuration is handled in Docker.
-
----
-
-### 7. Start the app
+### 6. Start the app
 
 ```
 docker compose up --build
@@ -126,10 +114,19 @@ http://localhost:3001
 
 ## 🔁 Daily Development
 
+- Start the application:
+
 ```
 docker compose up
 ```
-
+- Stop the application:
+```
+docker compose down
+```
+- Rebuild if needed (e.g., after dependency or config changes):
+```
+docker compose up --build
+```
 ---
 
 ## 🧠 Notes
@@ -142,7 +139,7 @@ docker compose up
 
 ## 🐛 Troubleshooting
 
-### `react/jsx-runtime` error
+### If you see errors like `react/jsx-runtime` not found or TypeScript issues in VS Code, run:
 
 ```
 npm install
