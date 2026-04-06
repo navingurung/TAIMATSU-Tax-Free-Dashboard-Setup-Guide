@@ -9,7 +9,7 @@
 
 ## 🛠 Initial Setup
 
-### 0. Open Docker Desktop
+### 00. Open Docker Desktop
 
 Make sure Docker Desktop is installed and running before starting.
 
